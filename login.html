@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Student Attendance</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .auth-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    .auth-container h2 {
+      margin-bottom: 20px;
+    }
+
+    .auth-container input,
+    .auth-container select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .auth-container button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .auth-container button:hover {
+      background: #0056b3;
+    }
+
+    .auth-container p {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Login</h2>
+
+    <!-- Django Login Form -->
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+
+      <select name="role" required>
+        <option value="">-- Select Role --</option>
+        <option value="student">Student</option>
+        <option value="teacher"  >Teacher</option>
+        {% comment %} <option value="admin">Admin</option> {% endcomment %}
+      </select>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="/signup/">Sign up</a></p>
+
+    <!-- Error Message -->
+    {% if messages %}
+      {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  </div>
+</body>
+</html>
